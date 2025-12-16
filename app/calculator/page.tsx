@@ -14,7 +14,12 @@ type Formula = {
 }
 
 type FormulaItem = {
-    material: { name: string, category: string }
+    material: {
+        id: string
+        name: string
+        category: string
+        material_inventory: { quantity_available: number }[]
+    }
     percentage: number
 }
 
@@ -45,16 +50,17 @@ export default function CalculatorPage() {
         setLoading(true)
         supabase
             .from('formula_items')
-            .select('percentage, material:materials(name, category)')
+            .select('percentage, material:materials(id, name, category, material_inventory(quantity_available))')
             .eq('formula_id', selectedFormulaId)
-            .then(({ data }) => {
+            .then(({ data, error }) => {
+                if (error) console.error(error)
                 setItems(data as any || [])
                 setLoading(false)
             })
     }, [selectedFormulaId])
 
     return (
-        <div className="max-w-4xl mx-auto space-y-8 animate-fadeIn">
+        <div className="w-full space-y-8 animate-fadeIn">
             <div>
                 <h1 className="text-3xl font-bold tracking-tight mb-2">Formula Batch Calculator</h1>
                 <p className="text-[var(--muted-foreground)]">Scale your recipes precisely for production.</p>
@@ -115,8 +121,14 @@ export default function CalculatorPage() {
                             </div>
 
                             {loading ? (
-                                <div className="animate-pulse space-y-4">
-                                    {[1, 2, 3].map(i => <div key={i} className="h-10 bg-zinc-100 rounded-lg dark:bg-zinc-800"></div>)}
+                                <div className="space-y-4 p-4">
+                                    {[1, 2, 3].map(i => (
+                                        <div key={i} className="flex justify-between items-center gap-4">
+                                            <div className="h-5 w-1/3 bg-[var(--muted)]/50 animate-pulse rounded"></div>
+                                            <div className="h-5 w-16 bg-[var(--muted)]/50 animate-pulse rounded"></div>
+                                            <div className="h-5 w-16 bg-[var(--muted)]/50 animate-pulse rounded"></div>
+                                        </div>
+                                    ))}
                                 </div>
                             ) : (
                                 <div className="overflow-hidden border border-[var(--border)] rounded-lg">
@@ -125,21 +137,43 @@ export default function CalculatorPage() {
                                             <tr>
                                                 <th className="p-3">Material</th>
                                                 <th className="p-3 text-right">Percent</th>
-                                                <th className="p-3 text-right">Quantity ({unit})</th>
+                                                <th className="p-3 text-right">Required ({unit})</th>
+                                                <th className="p-3 text-right">Stock</th>
+                                                <th className="p-3 text-center">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-[var(--border)]">
                                             {items.map((item, idx) => {
                                                 const qty = (item.percentage / 100) * totalAmount
+                                                // Stock is stored in base unit (assuming ml/g matches calculator unit for simplicity in Phase 3)
+                                                // *In a real app, unit conversion logic would be needed here if stock unit != calc unit*
+                                                // For now, assuming 1:1 match or user handles unit consistency.
+                                                const stock = item.material.material_inventory?.[0]?.quantity_available || 0
+                                                const isLow = stock < qty
+
                                                 return (
-                                                    <tr key={idx} className="hover:bg-[var(--muted)]/50">
+                                                    <tr key={idx} className={`hover:bg-[var(--muted)]/50 ${isLow ? 'bg-red-50 dark:bg-red-900/10' : ''}`}>
                                                         <td className="p-3 font-medium">
                                                             {item.material.name}
                                                             <span className="ml-2 text-xs text-[var(--muted-foreground)] font-normal border border-[var(--border)] px-1.5 py-0.5 rounded-full">{item.material.category}</span>
                                                         </td>
                                                         <td className="p-3 text-right">{item.percentage}%</td>
-                                                        <td className="p-3 text-right font-bold font-mono text-base">
+                                                        <td className={`p-3 text-right font-bold font-mono text-base ${isLow ? 'text-red-600 dark:text-red-400' : ''}`}>
                                                             {qty.toFixed(2)}
+                                                        </td>
+                                                        <td className="p-3 text-right text-[var(--muted-foreground)]">
+                                                            {stock}
+                                                        </td>
+                                                        <td className="p-3 text-center">
+                                                            {isLow ? (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                                                                    Low Stock
+                                                                </span>
+                                                            ) : (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                                    OK
+                                                                </span>
+                                                            )}
                                                         </td>
                                                     </tr>
                                                 )

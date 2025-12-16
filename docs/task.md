@@ -71,74 +71,75 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 3 – Formula Calculator (infov2.md)
 
 ### Tasks
-- [ ] Create **Formula Calculator** tab (`app/calculator/page.tsx`)
-- [ ] Implement calculation logic (`lib/calculations/formulaCalculator.ts`)
-- [ ] Formula selector dropdown
-- [ ] Quantity input
-  - [ ] Value
-  - [ ] Unit (ml / liter)
-- [ ] Auto conversion (liter → ml)
-- [ ] Calculate ingredient quantities
-- [ ] Display:
-  - [ ] Ingredient name
-  - [ ] Percentage
-  - [ ] Required ml
-- [ ] Optional:
-  - [ ] Show available stock
-  - [ ] Low-stock warning
+- [x] Create **Formula Calculator** tab (`app/calculator/page.tsx`)
+- [x] Implement calculation logic (`lib/calculations/formulaCalculator.ts`)
+- [x] Formula selector dropdown
+- [x] Quantity input
+  - [x] Value
+  - [x] Unit (ml / liter)
+- [x] Auto conversion (liter → ml)
+- [x] Calculate ingredient quantities
+- [x] Display:
+  - [x] Ingredient name
+  - [x] Percentage
+  - [x] Required ml
+- [x] Optional:
+  - [x] Show available stock
+  - [x] Low-stock warning
 
 **Depends on:** Phase 2  
-**Status:** Pending
+**Status:** Completed
 
 ---
 
 ## PHASE 4 – Inventory Management
 
 ### Tasks
-- [ ] Raw material inventory page (`app/inventory/page.tsx`)
-- [ ] Add stock (purchase entry)
-- [ ] Manual stock adjustment
-- [ ] Minimum stock level setting
-- [ ] Inventory list with remaining quantities
+- [x] Raw material inventory page (`app/inventory/page.tsx`)
+- [x] Add stock (purchase entry) -> Implemented as "Adjust Stock" (Set New Value)
+- [x] Manual stock adjustment
+- [x] Minimum stock level setting
+- [x] Inventory list with remaining quantities
 
-**Status:** Pending
+**Status:** Completed
 
 ---
 
 ## PHASE 5 – Batch Creation Module
 
 ### Tasks
-- [ ] Create batch form (`app/batches/page.tsx`)
-  - [ ] Select formula
-  - [ ] Select batch type (Fixative / Base / Perfume)
-  - [ ] Enter batch size (ml or bottle count)
-- [ ] Auto calculate required materials
-- [ ] Validate stock availability
-- [ ] Auto deduct materials from inventory
-- [ ] Create batch record
-- [ ] Set batch status = Bonding
+- [x] Create batch form (`app/batches/page.tsx` & `create/page.tsx`)
+  - [x] Select formula
+  - [x] Select batch type (Fixative / Base / Perfume)
+  - [x] Enter batch size (ml or bottle count)
+- [x] Auto calculate required materials
+- [x] Validate stock availability
+- [x] Auto deduct materials from inventory
+- [x] Create batch record
+- [x] Set batch status = Bonding
 
 **Depends on:** Phase 3, Phase 4  
-**Status:** Pending
+**Status:** Completed
 
 ---
 
 ## PHASE 6 – Bonding / Maceration Tracker
 
 ### Tasks
-- [ ] Bonding dashboard (`app/bonding/page.tsx`)
-- [ ] Display all active batches
-- [ ] Show:
-  - [ ] Batch name
-  - [ ] Type
-  - [ ] Start date
-  - [ ] Required bonding days
-  - [ ] Time passed (days / hours)
-  - [ ] Status (Bonding / Almost Ready / Matured)
-- [ ] Manual mark as Matured
+- [x] Bonding dashboard (`app/bonding/page.tsx`)
+- [x] Display all active batches
+- [x] Show:
+  - [x] Batch name
+  - [x] Type
+  - [x] Start date
+  - [x] Required bonding days
+  - [x] Time passed (days / hours)
+  - [x] Status (Bonding / Almost Ready / Matured)
+  - [x] Estimated ready date
+- [x] Manual mark as Matured
 
 **Depends on:** Phase 5  
-**Status:** Pending
+**Status:** Completed
 
 ---
 

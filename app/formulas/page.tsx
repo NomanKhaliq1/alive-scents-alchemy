@@ -12,7 +12,7 @@ export default async function FormulasPage() {
         .order('created_at', { ascending: false })
 
     return (
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="p-8 mx-auto">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Formulas</h1>
                 <Link href="/formulas/create">
