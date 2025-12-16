@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/db/supabase'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
+import { Input, Select } from '@/components/ui/FormElements'
 import { useRouter } from 'next/navigation'
 
 type Material = {
@@ -108,31 +109,29 @@ export default function FormulaForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-8">
 
             {error && (
-                <div className="bg-red-50 text-red-600 p-4 rounded border border-red-200">
+                <div className="bg-red-50 text-red-600 p-4 rounded-xl border border-red-100 text-sm font-medium">
                     {error}
                 </div>
             )}
 
             <Card>
-                <h3 className="font-semibold mb-4 text-gray-700">Basic Details</h3>
-                <div className="grid gap-4 md:grid-cols-2">
+                <h3 className="text-xl font-bold mb-6 tracking-tight">Basic Details</h3>
+                <div className="grid gap-6 md:grid-cols-2">
                     <div>
-                        <label className="block text-sm font-medium mb-1">Formula Name</label>
-                        <input
+                        <label className="block text-sm font-medium mb-2 text-gray-500">Formula Name</label>
+                        <Input
                             required
-                            className="w-full border rounded p-2"
                             value={name}
                             onChange={e => setName(e.target.value)}
                             placeholder="e.g. Midnight Jasmine"
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Type</label>
-                        <select
-                            className="w-full border rounded p-2"
+                        <label className="block text-sm font-medium mb-2 text-gray-500">Type</label>
+                        <Select
                             value={type}
                             onChange={e => setType(e.target.value)}
                         >
@@ -140,12 +139,12 @@ export default function FormulaForm() {
                             <option value="Fixative">Fixative</option>
                             <option value="Base">Base</option>
                             <option value="Oil_Blend">Oil Blend</option>
-                        </select>
+                        </Select>
                     </div>
                     <div className="md:col-span-2">
-                        <label className="block text-sm font-medium mb-1">Notes</label>
+                        <label className="block text-sm font-medium mb-2 text-gray-500">Notes</label>
                         <textarea
-                            className="w-full border rounded p-2"
+                            className="w-full bg-[var(--background)] border border-[var(--border)] rounded-xl p-3 text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[var(--foreground)]/10 focus:border-[var(--foreground)] placeholder:text-[var(--muted-foreground)]"
                             rows={3}
                             value={notes}
                             onChange={e => setNotes(e.target.value)}
@@ -155,20 +154,19 @@ export default function FormulaForm() {
             </Card>
 
             <Card>
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="font-semibold text-gray-700">Ingredients</h3>
-                    <div className={`font-bold ${totalPercentage === 100 ? 'text-green-600' : 'text-orange-500'}`}>
+                <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-bold tracking-tight">Ingredients</h3>
+                    <div className={`px-3 py-1 rounded-full text-sm font-bold border ${totalPercentage === 100 ? 'bg-green-50 text-green-700 border-green-200' : 'bg-orange-50 text-orange-700 border-orange-200'}`}>
                         Total: {totalPercentage}%
                     </div>
                 </div>
 
                 <div className="space-y-3">
                     {items.map((item, index) => (
-                        <div key={index} className="flex gap-2 items-start">
+                        <div key={index} className="flex gap-3 items-start animate-fadeIn">
                             <div className="flex-1">
-                                <select
+                                <Select
                                     required
-                                    className="w-full border rounded p-2"
                                     value={item.material_id}
                                     onChange={e => updateItem(index, 'material_id', e.target.value)}
                                 >
@@ -178,14 +176,13 @@ export default function FormulaForm() {
                                             {m.name} ({m.category})
                                         </option>
                                     ))}
-                                </select>
+                                </Select>
                             </div>
                             <div className="w-28">
-                                <input
+                                <Input
                                     type="number"
                                     step="0.01"
                                     required
-                                    className="w-full border rounded p-2"
                                     placeholder="%"
                                     value={item.percentage}
                                     onChange={e => updateItem(index, 'percentage', parseFloat(e.target.value))}
@@ -193,9 +190,9 @@ export default function FormulaForm() {
                             </div>
                             <Button
                                 type="button"
-                                variant="danger"
+                                variant="ghost"
                                 onClick={() => handleRemoveItem(index)}
-                                className="px-3"
+                                className="hover:bg-red-50 hover:text-red-500 px-3"
                             >
                                 ×
                             </Button>
@@ -203,20 +200,21 @@ export default function FormulaForm() {
                     ))}
                 </div>
 
-                <button
-                    type="button"
-                    onClick={handleAddItem}
-                    className="mt-4 text-sm text-blue-600 hover:text-blue-800 font-medium"
-                >
-                    + Add Ingredient
-                </button>
-
-            </Card>
-
-            <div className="flex justify-end gap-3">
                 <Button
                     type="button"
                     variant="secondary"
+                    onClick={handleAddItem}
+                    className="mt-6 w-full md:w-auto"
+                >
+                    + Add Ingredient
+                </Button>
+
+            </Card>
+
+            <div className="flex justify-end gap-3 pt-4">
+                <Button
+                    type="button"
+                    variant="ghost"
                     onClick={() => router.back()}
                 >
                     Cancel

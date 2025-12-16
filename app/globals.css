@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-border: var(--border);
+  --color-card: var(--card);
+}
+
+:root {
+  --background: #f4f4f5;
+  /* Light Gray for main bg (Zinc 100) */
+  --foreground: #09090b;
+  /* Zinc 950 */
+  --card: #ffffff;
+  --border: #e4e4e7;
+  /* Zinc 200 */
+  --muted-foreground: #71717a;
+  /* Zinc 500 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    /* Deep Black */
+    --foreground: #ffffff;
+    --card: #09090b;
+    /* Zinc 950 - Slightly lighter than bg */
+    --border: #27272a;
+    /* Zinc 800 */
+    --muted-foreground: #a1a1aa;
+    /* Zinc 400 */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Ensure links are white in dark mode */
+a {
+  color: inherit;
 }
