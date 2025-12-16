@@ -3,10 +3,12 @@
 
 ---
 
-## Project Name
+## Project Identity
 Alive Scents Alchemy
 
 Internal lab system for managing perfume formulas, batches, bonding, and inventory.
+
+**Governance:** Strictly follows `ANTIGRAVITY.md`.
 
 ---
 
@@ -16,11 +18,12 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 - [ ] Initialize Git repository: `alive-scents-alchemy`
 - [ ] Implement directory structure (as per `folders-structured.md`)
 - [ ] Move documentation to `docs/` folder
+- [ ] Create `env.example` template (Strict Rule)
 - [ ] Setup Next.js + TypeScript project
 - [ ] Configure Tailwind CSS
-- [ ] Setup Supabase project
-  - [ ] Database
-  - [ ] Auth (single admin user initially)
+- [ ] Configure Supabase client (`lib/db/supabase.ts`)
+  - [ ] Database setup
+  - [ ] Auth setup (single admin user)
 - [ ] Environment variables configuration
 
 **Status:** Pending
@@ -48,8 +51,8 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 2 – Formula Management Module
 
 ### Tasks
-- [ ] Formula list page
-- [ ] Create / edit formula
+- [ ] Formula list page (`app/formulas/page.tsx`)
+- [ ] Create / edit formula (`app/formulas/create/`, `edit/`)
   - [ ] Name
   - [ ] Type
   - [ ] Notes
@@ -68,7 +71,8 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 3 – Formula Calculator (infov2.md)
 
 ### Tasks
-- [ ] Create **Formula Calculator** tab
+- [ ] Create **Formula Calculator** tab (`app/calculator/page.tsx`)
+- [ ] Implement calculation logic (`lib/calculations/formulaCalculator.ts`)
 - [ ] Formula selector dropdown
 - [ ] Quantity input
   - [ ] Value
@@ -91,7 +95,7 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 4 – Inventory Management
 
 ### Tasks
-- [ ] Raw material inventory page
+- [ ] Raw material inventory page (`app/inventory/page.tsx`)
 - [ ] Add stock (purchase entry)
 - [ ] Manual stock adjustment
 - [ ] Minimum stock level setting
@@ -104,7 +108,7 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 5 – Batch Creation Module
 
 ### Tasks
-- [ ] Create batch form
+- [ ] Create batch form (`app/batches/page.tsx`)
   - [ ] Select formula
   - [ ] Select batch type (Fixative / Base / Perfume)
   - [ ] Enter batch size (ml or bottle count)
@@ -122,7 +126,7 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 6 – Bonding / Maceration Tracker
 
 ### Tasks
-- [ ] Bonding dashboard
+- [ ] Bonding dashboard (`app/bonding/page.tsx`)
 - [ ] Display all active batches
 - [ ] Show:
   - [ ] Batch name
@@ -147,7 +151,7 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
   - [ ] Product name
   - [ ] Batch reference
   - [ ] Quantity available
-- [ ] Simple finished stock list page
+- [ ] Simple finished stock list page (`app/stock/page.tsx`)
 
 **Depends on:** Phase 6  
 **Status:** Pending
@@ -200,6 +204,6 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 
 ## Document Info
 
-Version: v1.1  
-Based on: infov1.md, infov2.md, folders-structured.md  
+Version: v1.2  
+Based on: infov1.md, infov2.md, folders-structured.md, ANTIGRAVITY.md  
 Next File: schema.sql
