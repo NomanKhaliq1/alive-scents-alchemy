@@ -21,12 +21,12 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 - [x] Create `env.example` template (Strict Rule)
 - [x] Setup Next.js + TypeScript project
 - [x] Configure Tailwind CSS
-- [ ] Configure Supabase client (`lib/db/supabase.ts`)
-  - [ ] Database setup
-  - [ ] Auth setup (single admin user)
-- [ ] Environment variables configuration
+- [x] Configure Supabase client (`lib/db/supabase.ts`)
+  - [x] Database setup
+  - [x] Auth setup (single admin user)
+- [x] Environment variables configuration
 
-**Status:** In Progress
+**Status:** Completed
 
 ---
 
