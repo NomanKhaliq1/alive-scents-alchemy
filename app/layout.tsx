@@ -6,11 +6,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <body suppressHydrationWarning={true} className="bg-[var(--background)] text-[var(--foreground)] antialiased min-h-screen flex relative overflow-hidden">
 
-        {/* Alchemy Background Mesh */}
-        <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-          <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-violet-600/10 blur-[120px] animate-pulse" />
-          <div className="absolute top-[40%] -right-[10%] w-[60%] h-[60%] rounded-full bg-indigo-600/10 blur-[120px]" />
-          <div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] rounded-full bg-fuchsia-600/10 blur-[120px]" />
+        {/* Alchemy Background Mesh - Optimized */}
+        <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none transform-gpu will-change-transform">
+          <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-violet-600/5 blur-[80px] animate-pulse" />
+          <div className="absolute top-[40%] -right-[10%] w-[60%] h-[60%] rounded-full bg-indigo-600/5 blur-[80px]" />
+          <div className="absolute -bottom-[20%] left-[20%] w-[50%] h-[50%] rounded-full bg-fuchsia-600/5 blur-[80px]" />
         </div>
 
         <Navigation />
