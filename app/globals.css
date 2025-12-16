@@ -10,28 +10,42 @@
 }
 
 :root {
-  --background: #f4f4f5;
-  /* Light Gray for main bg (Zinc 100) */
-  --foreground: #09090b;
-  /* Zinc 950 */
+  /* Light Mode - Still clean but warmer */
+  --background: #fdfbf7;
+  /* Warm white */
+  --foreground: #2d2a2e;
   --card: #ffffff;
-  --border: #e4e4e7;
-  /* Zinc 200 */
-  --muted-foreground: #71717a;
-  /* Zinc 500 */
+  --border: #e2e8f0;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --primary: #7c3aed;
+  /* Violet */
+  --primary-foreground: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
-    /* Deep Black */
-    --foreground: #ffffff;
-    --card: #09090b;
-    /* Zinc 950 - Slightly lighter than bg */
-    --border: #27272a;
-    /* Zinc 800 */
-    --muted-foreground: #a1a1aa;
-    /* Zinc 400 */
+    /* SCENT ALCHEMY DARK MODE */
+    --background: #030014;
+    /* Deep Tech/Space Black */
+    --foreground: #e2e8f0;
+
+    /* Glass Cards */
+    --card: #0f1021;
+    --card-foreground: #f8fafc;
+
+    /* Accents */
+    --border: #1e1b4b;
+    /* Deep Indigo Border */
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+
+    --primary: #8b5cf6;
+    /* Glowing Violet */
+    --primary-foreground: #ffffff;
+
+    --accent: #f59e0b;
+    /* Gold/Amber for specific highlights */
   }
 }
 
@@ -39,9 +53,26 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
-/* Ensure links are white in dark mode */
-a {
-  color: inherit;
+/* Custom Utilities for Glassmorphism */
+.glass-panel {
+  background: rgba(15, 16, 33, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #c084fc, #f472b6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
