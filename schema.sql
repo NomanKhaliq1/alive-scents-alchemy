@@ -99,6 +99,33 @@ create table dealer_contacts (
   role text, -- Owner, Worker, Helper, Manager
   phone text,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- 10. Purchases
+-- Tracks buying of raw materials (cash out), increases inventory
+create table purchases (
+  id uuid default gen_random_uuid() primary key,
+  material_id uuid references materials(id) not null,
+  dealer_id uuid references dealers(id), -- Optional
+  quantity numeric not null check (quantity > 0),
+  cost numeric not null check (cost >= 0),
+  purchase_date date default current_date not null,
+  notes text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- 11. Sales
+-- Tracks selling of finished perfume (cash in), decreases finished stock
+create table sales (
+  id uuid default gen_random_uuid() primary key,
+  product_id uuid references finished_stock(id) not null,
+  quantity_sold integer not null check (quantity_sold > 0),
+  sale_price numeric not null check (sale_price >= 0),
+  total_amount numeric generated always as (quantity_sold * sale_price) stored,
+  customer_name text,
+  sale_date date default current_date not null,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
 -- Indexes for performance
