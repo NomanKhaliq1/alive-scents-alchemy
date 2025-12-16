@@ -208,6 +208,18 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 
 ---
 
+## PHASE 11 – Dashboard Analytics (Enhancement)
+
+### Tasks
+- [x] Install `recharts`
+- [x] Create `AnalyticsCharts` component
+- [x] Integrate charts into Dashboard (`app/page.tsx`)
+- [x] Connect Real Data (Supabase Sales/Purchases)
+
+**Status:** Completed
+
+---
+
 ## RULES (Locked from info files)
 
 - Formulas are always saved in percentages
