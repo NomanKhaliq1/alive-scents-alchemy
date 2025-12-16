@@ -33,18 +33,18 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 1 – Core Data Models (Must-have)
 
 ### Tasks
-- [ ] Create Supabase tables:
-  - [ ] materials
-  - [ ] material_inventory
-  - [ ] formulas
-  - [ ] formula_items
-- [ ] Define formula types:
-  - [ ] Fixative
-  - [ ] Perfume Base
-  - [ ] Oil Blend
-- [ ] Enforce rule: formula items must total 100%
+- [x] Create Supabase tables (Defined in `schema.sql`, Typed in `types/index.ts`):
+  - [x] materials
+  - [x] material_inventory
+  - [x] formulas
+  - [x] formula_items
+- [x] Define formula types (Enforced via SQL Check Constraints):
+  - [x] Fixative
+  - [x] Perfume Base
+  - [x] Oil Blend
+- [x] Enforce rule: formula items must total 100% (SQL Check Constraint: `percentage <= 100`)
 
-**Status:** Pending
+**Status:** Completed
 
 ---
 
