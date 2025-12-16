@@ -233,6 +233,17 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 
 ---
 
+## PHASE 13 – Performance Optimization
+
+### Tasks
+- [x] **Global Loading**: Implement `app/loading.tsx` for visual feedback
+- [x] **Background Optimization**: Reduce blur radius and opacity in `layout.tsx`
+- [ ] **Route Specific Loading**: Add granular loading states if needed
+
+**Status:** Completed
+
+---
+
 ## RULES (Locked from info files)
 
 - Formulas are always saved in percentages
