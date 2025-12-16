@@ -15,10 +15,10 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 0 – Project Setup (Foundation)
 
 ### Tasks
-- [ ] Initialize Git repository: `alive-scents-alchemy`
-- [ ] Implement directory structure (as per `folders-structured.md`)
-- [ ] Move documentation to `docs/` folder
-- [ ] Create `env.example` template (Strict Rule)
+- [x] Initialize Git repository: `alive-scents-alchemy`
+- [x] Implement directory structure (as per `folders-structured.md`)
+- [x] Move documentation to `docs/` folder
+- [x] Create `env.example` template (Strict Rule)
 - [ ] Setup Next.js + TypeScript project
 - [ ] Configure Tailwind CSS
 - [ ] Configure Supabase client (`lib/db/supabase.ts`)
@@ -26,7 +26,7 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
   - [ ] Auth setup (single admin user)
 - [ ] Environment variables configuration
 
-**Status:** Pending
+**Status:** In Progress
 
 ---
 
