@@ -220,6 +220,19 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 
 ---
 
+## PHASE 12 – UI Overhaul (Visual Excellence)
+
+### Tasks
+- [x] **Dependencies**: Install `framer-motion`, `clsx`, `tailwind-merge`
+- [x] **Global Styling**: Rewrite `globals.css` (Dark/Gold/Purple Theme)
+- [x] **Components**: Refactor `Card`, `Button`, `Input` for Glassmorphism
+- [x] **Layout**: Add animated background mesh
+- [x] **Dashboard**: Redesign for "Command Center" feel
+
+**Status:** Completed
+
+---
+
 ## RULES (Locked from info files)
 
 - Formulas are always saved in percentages
