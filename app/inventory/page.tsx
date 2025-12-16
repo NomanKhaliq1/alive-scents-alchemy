@@ -166,6 +166,7 @@ export default function InventoryPage() {
                                                     autoFocus
                                                     className="w-24 text-right h-8 py-1 inline-block"
                                                     value={adjustAmount}
+                                                    min="0"
                                                     // Pre-fill logic could go here
                                                     onChange={e => setAdjustAmount(e.target.value)}
                                                 />
@@ -179,6 +180,7 @@ export default function InventoryPage() {
                                                     type="number"
                                                     className="w-20 text-right h-8 py-1 inline-block"
                                                     value={newReorderLevel}
+                                                    min="0"
                                                     onChange={e => setNewReorderLevel(e.target.value)}
                                                 />
                                             ) : (

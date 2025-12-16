@@ -192,6 +192,7 @@ export default function CreateBatchPage() {
                                     type="number"
                                     required
                                     min="1"
+                                    step="any"
                                     value={totalQuantity}
                                     onChange={e => setTotalQuantity(parseFloat(e.target.value))}
                                 />

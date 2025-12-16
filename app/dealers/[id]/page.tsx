@@ -138,7 +138,7 @@ export default function DealerDetailsPage({ params }: { params: Promise<{ id: st
                             <div className="grid grid-cols-2 gap-2">
                                 <div>
                                     <label className="block text-xs font-bold mb-1">Price</label>
-                                    <Input required type="number" step="0.01" value={price} onChange={e => setPrice(e.target.value)} />
+                                    <Input required type="number" min="0" step="0.01" value={price} onChange={e => setPrice(e.target.value)} />
                                 </div>
                                 <div>
                                     <label className="block text-xs font-bold mb-1">Currency</label>
