@@ -188,26 +188,6 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 
 ---
 
-## PHASE 10 – Sales & Finance (v3)
-
-### Tasks
-- [ ] **Schema Updates**
-  - [ ] `sales` table (Linked to Finished Stock)
-  - [ ] `purchases` table (Linked to Material Inventory)
-- [ ] **Purchases Module** (`app/purchases/`)
-  - [ ] Purchase Entry Form (Auto-adds to Inventory)
-  - [ ] Purchase History List
-- [ ] **Sales Module** (`app/sales/`)
-  - [ ] Sales Entry Form (Auto-deducts Finished Stock)
-  - [ ] Sales History List
-- [ ] **Finance Dashboard** (`app/finance/`)
-  - [ ] Cash Flow Summary (Income - Expenses)
-  - [ ] Profit/Loss Simple View
-
-**Status:** Pending
-
----
-
 ## RULES (Locked from info files)
 
 - Formulas are always saved in percentages

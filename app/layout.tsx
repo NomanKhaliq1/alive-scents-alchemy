@@ -4,7 +4,7 @@ import { Navigation } from "@/components/Navigation";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-[var(--background)] text-[var(--foreground)] antialiased min-h-screen flex">
+      <body suppressHydrationWarning={true} className="bg-[var(--background)] text-[var(--foreground)] antialiased min-h-screen flex">
 
         <Navigation />
 

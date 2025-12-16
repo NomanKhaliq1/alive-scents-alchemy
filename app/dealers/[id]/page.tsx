@@ -31,6 +31,11 @@ export default function DealerDetailsPage({ params }: { params: Promise<{ id: st
     const [contactPhone, setContactPhone] = useState('')
     const [contacts, setContacts] = useState<any[]>([])
 
+    // Add Price Form
+    const [selectedMaterial, setSelectedMaterial] = useState('')
+    const [price, setPrice] = useState('')
+    const [currency, setCurrency] = useState('PKR')
+
     useEffect(() => {
         fetchData()
     }, [id])
