@@ -51,20 +51,20 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 2 – Formula Management Module
 
 ### Tasks
-- [ ] Formula list page (`app/formulas/page.tsx`)
-- [ ] Create / edit formula (`app/formulas/create/`, `edit/`)
-  - [ ] Name
-  - [ ] Type
-  - [ ] Notes
-- [ ] Add ingredients to formula
-  - [ ] Select material
-  - [ ] Enter percentage
-- [ ] Auto validation:
-  - [ ] Total % = 100
-- [ ] Save formula in percent-only format
+- [x] Formula list page (`app/formulas/page.tsx`)
+- [x] Create / edit formula (`app/formulas/create/`, `edit/`)
+  - [x] Name
+  - [x] Type
+  - [x] Notes
+- [x] Add ingredients to formula
+  - [x] Select material
+  - [x] Enter percentage
+- [x] Auto validation:
+  - [x] Total % = 100
+- [x] Save formula in percent-only format
 
 **Depends on:** Phase 1  
-**Status:** Pending
+**Status:** Completed
 
 ---
 
