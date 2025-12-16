@@ -30,15 +30,26 @@ export default async function Home() {
 
   // 3. Process Data for Charts
 
-  // A. Revenue Trend (Group by Date)
+  // A. Revenue Trend (Group by Date - Full 30 Day Timeline)
   const salesMap = new Map<string, number>();
+
+  // 1. Initialize last 30 days with 0
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().split('T')[0];
+    salesMap.set(dateStr, 0);
+  }
+
+  // 2. Fill with actual data
   sales?.forEach(sale => {
     const date = sale.sale_date;
     const amount = sale.total_amount || 0;
-    salesMap.set(date, (salesMap.get(date) || 0) + amount);
+    if (salesMap.has(date)) {
+      salesMap.set(date, (salesMap.get(date) || 0) + amount);
+    }
   });
 
-  // Fill in missing dates? (Optional, maybe skip for MVP)
   const salesTrend = Array.from(salesMap.entries()).map(([date, amount]) => ({
     date,
     amount
@@ -53,10 +64,17 @@ export default async function Home() {
     productMap.set(name, (productMap.get(name) || 0) + qty);
   });
 
-  const topProducts = Array.from(productMap.entries())
+  let topProducts = Array.from(productMap.entries())
     .map(([name, quantity]) => ({ name, quantity }))
     .sort((a, b) => b.quantity - a.quantity)
     .slice(0, 5);
+
+  // Fallback for Empty State (to show Chart axes)
+  if (topProducts.length === 0) {
+    topProducts = [
+      { name: "No Sales Yet", quantity: 0 },
+    ];
+  }
 
   // C. Headline Stats
   const recentRevenue = sales?.reduce((sum, s) => sum + (s.total_amount || 0), 0) || 0;

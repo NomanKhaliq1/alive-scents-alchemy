@@ -107,6 +107,135 @@ export interface Database {
                     percentage?: number
                 }
             }
+            batches: {
+                Row: {
+                    id: string
+                    created_at: string
+                    batch_number: number
+                    formula_id: string
+                    type: 'Fixative' | 'Base' | 'Perfume'
+                    total_quantity: number
+                    unit: string
+                    status: 'Bonding' | 'Ready' | 'Finished'
+                    bonding_start_date: string | null
+                    bonding_end_date_estimated: string | null
+                    notes: string | null
+                }
+                Insert: {
+                    id?: string
+                    created_at?: string
+                    batch_number?: number
+                    formula_id: string
+                    type: 'Fixative' | 'Base' | 'Perfume'
+                    total_quantity: number
+                    unit?: string
+                    status?: 'Bonding' | 'Ready' | 'Finished'
+                    bonding_start_date?: string | null
+                    bonding_end_date_estimated?: string | null
+                    notes?: string | null
+                }
+                Update: {
+                    id?: string
+                    created_at?: string
+                    batch_number?: number
+                    formula_id?: string
+                    type?: 'Fixative' | 'Base' | 'Perfume'
+                    total_quantity?: number
+                    unit?: string
+                    status?: 'Bonding' | 'Ready' | 'Finished'
+                    bonding_start_date?: string | null
+                    bonding_end_date_estimated?: string | null
+                    notes?: string | null
+                }
+            }
+            purchases: {
+                Row: {
+                    id: string
+                    material_id: string
+                    dealer_id: string | null
+                    quantity: number
+                    cost: number
+                    purchase_date: string
+                    notes: string | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    material_id: string
+                    dealer_id?: string | null
+                    quantity: number
+                    cost: number
+                    purchase_date?: string
+                    notes?: string | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    material_id?: string
+                    dealer_id?: string | null
+                    quantity?: number
+                    cost?: number
+                    purchase_date?: string
+                    notes?: string | null
+                    created_at?: string
+                }
+            }
+            sales: {
+                Row: {
+                    id: string
+                    product_id: string
+                    quantity_sold: number
+                    sale_price: number
+                    total_amount: number | null // Generated column
+                    customer_name: string | null
+                    sale_date: string
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    product_id: string
+                    quantity_sold: number
+                    sale_price: number
+                    customer_name?: string | null
+                    sale_date?: string
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    product_id?: string
+                    quantity_sold?: number
+                    sale_price?: number
+                    customer_name?: string | null
+                    sale_date?: string
+                    created_at?: string
+                }
+            }
+            finished_stock: {
+                Row: {
+                    id: string
+                    batch_id: string
+                    product_name: string
+                    bottles_available: number
+                    bottle_size_ml: number
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    batch_id: string
+                    product_name: string
+                    bottles_available?: number
+                    bottle_size_ml: number
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    batch_id?: string
+                    product_name?: string
+                    bottles_available?: number
+                    bottle_size_ml?: number
+                    created_at?: string
+                }
+            }
         }
     }
 }

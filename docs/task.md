@@ -233,6 +233,17 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 
 ---
 
+## PHASE 14 – UI Overhaul (Form Elements)
+
+### Tasks
+- [x] **Form Elements**: Refactor `Input` and `Select` in `components/ui/FormElements.tsx`
+- [x] **Styling**: Apply Glass/Neumorphism styles (translucent bg, glowing border)
+- [x] **Consistency**: Ensure all forms (`batches/create`, `formulas/create`) consume these components
+
+**Status:** Completed
+
+---
+
 ## PHASE 13 – Performance Optimization
 
 ### Tasks
