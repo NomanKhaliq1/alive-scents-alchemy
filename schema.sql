@@ -81,6 +81,16 @@ create table dealers (
   notes text
 );
 
+-- 8. Dealer Prices
+create table dealer_prices (
+  id uuid default gen_random_uuid() primary key,
+  dealer_id uuid references dealers(id) on delete cascade not null,
+  material_id uuid references materials(id) on delete cascade not null,
+  price numeric not null,
+  currency text not null default 'PKR',
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
 -- Indexes for performance
 create index idx_materials_category on materials(category);
 create index idx_formulas_type on formulas(type);

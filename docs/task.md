@@ -163,12 +163,11 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 8 – Dealers & Price List (Optional / Later)
 
 ### Tasks
-- [ ] Dealer profiles
-- [ ] Dealer product price lists
-- [ ] Price history tracking
-- [ ] Link materials to dealer sources
+- [x] Dealer profiles (`app/dealers/page.tsx`)
+- [x] Dealer product price lists (`app/dealers/[id]/page.tsx`)
+- [x] Link materials to dealer sources (via prices table)
 
-**Status:** Backlog
+**Status:** Completed
 
 ---
 
