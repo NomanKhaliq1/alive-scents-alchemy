@@ -44,7 +44,7 @@ export default function BondingPage() {
         bonding_start_date,
         formula:formulas(name, default_bonding_days)
       `)
-            .eq('status', 'Bonding')
+            .in('status', ['Bonding', 'Ready'])
             .order('bonding_start_date', { ascending: true }) // Oldest first (closest to ready)
 
         if (!error && data) {
@@ -59,14 +59,54 @@ export default function BondingPage() {
         setProcessingId(id)
         const { error } = await supabase
             .from('batches')
-            .update({ status: 'Ready' }) // Schema says 'Ready' or 'Finished'? Let's assume 'Ready' for now based on context.
-            // Schema check: status in ('Bonding', 'Ready', 'Finished')
+            .update({ status: 'Ready' })
             .eq('id', id)
 
         if (!error) {
             fetchBondingBatches()
         } else {
             alert('Error updating batch')
+        }
+        setProcessingId(null)
+    }
+
+    const bottleBatch = async (batch: BondingBatch) => {
+        const bottleSize = prompt(`Bottle Size (ml)?`)
+        if (!bottleSize) return
+
+        const count = prompt(`Number of ${bottleSize}ml bottles?`)
+        if (!count) return
+
+        if (!confirm(`Create ${count} x ${bottleSize}ml bottles of ${batch.formula.name}? This will mark batch as Finished.`)) return
+
+        setProcessingId(batch.id)
+
+        // 1. Create Finished Stock
+        const { error: stockError } = await supabase
+            .from('finished_stock')
+            .insert([{
+                batch_id: batch.id,
+                product_name: batch.formula.name,
+                bottles_available: parseInt(count),
+                bottle_size_ml: parseFloat(bottleSize)
+            }])
+
+        if (stockError) {
+            alert('Error creating stock: ' + stockError.message)
+            setProcessingId(null)
+            return
+        }
+
+        // 2. Mark Batch as Finished
+        const { error: batchError } = await supabase
+            .from('batches')
+            .update({ status: 'Finished' })
+            .eq('id', batch.id)
+
+        if (!batchError) {
+            fetchBondingBatches()
+        } else {
+            alert('Error updating batch status')
         }
         setProcessingId(null)
     }
@@ -83,7 +123,7 @@ export default function BondingPage() {
                     Array.from({ length: 3 }).map((_, i) => <Skeleton key={i} className="h-64 w-full rounded-2xl" />)
                 ) : batches.length === 0 ? (
                     <div className="col-span-full text-center py-12 text-[var(--muted-foreground)] border border-dashed border-[var(--border)] rounded-xl">
-                        No batches currently in bonding phase.
+                        No active bonding or ready batches found.
                     </div>
                 ) : (
                     batches.map(batch => {
@@ -93,7 +133,7 @@ export default function BondingPage() {
                         const daysPassed = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
                         const requiredDays = batch.formula?.default_bonding_days || 0 // Default 0 if null
                         const progress = requiredDays > 0 ? Math.min((daysPassed / requiredDays) * 100, 100) : 100
-                        const isReady = daysPassed >= requiredDays
+                        const isReady = daysPassed >= requiredDays || batch.status === 'Ready'
 
                         return (
                             <Card key={batch.id} className="flex flex-col relative overflow-hidden group">
@@ -120,7 +160,7 @@ export default function BondingPage() {
                                         <div className="flex justify-between text-xs font-medium">
                                             <span>Progress</span>
                                             <span className={isReady ? 'text-green-600' : 'text-blue-600'}>
-                                                {daysPassed} / {requiredDays} days
+                                                {batch.status === 'Ready' ? 'Matured (Ready)' : `${daysPassed} / ${requiredDays} days`}
                                             </span>
                                         </div>
                                         <div className="w-full bg-[var(--muted)] rounded-full h-2 overflow-hidden">
@@ -135,7 +175,15 @@ export default function BondingPage() {
                                 </div>
 
                                 <div className="mt-6 pt-4 border-t border-[var(--border)]">
-                                    {isReady ? (
+                                    {batch.status === 'Ready' ? (
+                                        <Button
+                                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                                            onClick={() => bottleBatch(batch)}
+                                            disabled={!!processingId}
+                                        >
+                                            {processingId === batch.id ? 'Bottling...' : '🍾 Bottle Batch'}
+                                        </Button>
+                                    ) : isReady ? (
                                         <Button
                                             className="w-full bg-green-600 hover:bg-green-700 text-white shadow-green-200 dark:shadow-none"
                                             onClick={() => markAsMatured(batch.id)}

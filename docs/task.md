@@ -146,16 +146,17 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 7 – Finished Stock Management
 
 ### Tasks
-- [ ] When batch is marked Matured:
-  - [ ] Move to finished stock
-- [ ] Track:
-  - [ ] Product name
-  - [ ] Batch reference
-  - [ ] Quantity available
-- [ ] Simple finished stock list page (`app/stock/page.tsx`)
+### Tasks
+- [x] When batch is marked Matured:
+  - [x] Move to finished stock ("Bottle Batch" action)
+- [x] Track:
+  - [x] Product name
+  - [x] Batch reference
+  - [x] Quantity available
+- [x] Simple finished stock list page (`app/stock/page.tsx`)
 
 **Depends on:** Phase 6  
-**Status:** Pending
+**Status:** Completed
 
 ---
 
