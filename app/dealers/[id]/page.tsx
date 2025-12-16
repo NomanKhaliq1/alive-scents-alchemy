@@ -25,10 +25,11 @@ export default function DealerDetailsPage({ params }: { params: Promise<{ id: st
     const [materials, setMaterials] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
-    // Add Price Form
-    const [selectedMaterial, setSelectedMaterial] = useState('')
-    const [price, setPrice] = useState('')
-    const [currency, setCurrency] = useState('PKR')
+    // Add Contact Form
+    const [contactName, setContactName] = useState('')
+    const [contactRole, setContactRole] = useState('Worker')
+    const [contactPhone, setContactPhone] = useState('')
+    const [contacts, setContacts] = useState<any[]>([])
 
     useEffect(() => {
         fetchData()
@@ -48,11 +49,39 @@ export default function DealerDetailsPage({ params }: { params: Promise<{ id: st
             .order('updated_at', { ascending: false })
         if (p) setPrices(p as any)
 
-        // 3. All Materials (for dropdown)
+        // 3. Contacts
+        const { data: c } = await supabase
+            .from('dealer_contacts')
+            .select('*')
+            .eq('dealer_id', id)
+            .order('created_at', { ascending: true })
+        if (c) setContacts(c)
+
+        // 4. All Materials (for dropdown)
         const { data: m } = await supabase.from('materials').select('id, name').order('name')
         if (m) setMaterials(m)
 
         setLoading(false)
+    }
+
+    async function addContact(e: React.FormEvent) {
+        e.preventDefault()
+        if (!contactName) return
+
+        const { error } = await supabase.from('dealer_contacts').insert([{
+            dealer_id: id,
+            name: contactName,
+            role: contactRole,
+            phone: contactPhone
+        }])
+
+        if (!error) {
+            setContactName('')
+            setContactPhone('')
+            fetchData()
+        } else {
+            alert('Error adding contact')
+        }
     }
 
     async function addPrice(e: React.FormEvent) {
@@ -82,13 +111,63 @@ export default function DealerDetailsPage({ params }: { params: Promise<{ id: st
         <div className="w-full space-y-8 animate-fadeIn">
             <div>
                 <Link href="/dealers" className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] mb-2 inline-block">← Back to Dealers</Link>
-                <h1 className="text-3xl font-bold tracking-tight">{dealer.name}</h1>
-                <p className="text-[var(--muted-foreground)]">{dealer.city || 'No City'} • {dealer.contact_info || 'No Contact'}</p>
+                <div className="flex justify-between items-start">
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight">{dealer.name}</h1>
+                        <p className="text-[var(--muted-foreground)]">{dealer.city || 'No City'} • {dealer.contact_info || 'No Contact'}</p>
+                    </div>
+                </div>
             </div>
 
             <div className="grid lg:grid-cols-3 gap-8">
-                {/* LEFT: Price List */}
-                <div className="lg:col-span-2 space-y-6">
+                {/* LEFT COLUMN */}
+                <div className="lg:col-span-2 space-y-8">
+
+                    {/* CONTACTS SECTION */}
+                    <Card>
+                        <h3 className="font-bold text-lg mb-4">Key People</h3>
+                        <div className="grid sm:grid-cols-2 gap-4 mb-6">
+                            {contacts.map(c => (
+                                <div key={c.id} className="p-3 border rounded-lg flex justify-between items-center bg-[var(--background)]">
+                                    <div>
+                                        <div className="font-bold">{c.name}</div>
+                                        <div className="text-xs text-[var(--muted-foreground)]">{c.role}</div>
+                                    </div>
+                                    <div className="text-sm font-mono">{c.phone}</div>
+                                </div>
+                            ))}
+                            {contacts.length === 0 && <p className="text-sm text-[var(--muted-foreground)] italic">No contacts added.</p>}
+                        </div>
+
+                        <form onSubmit={addContact} className="p-4 bg-[var(--muted)]/30 rounded-lg space-y-3">
+                            <h4 className="text-xs font-bold uppercase text-[var(--muted-foreground)]">Add Person</h4>
+                            <div className="grid grid-cols-3 gap-2">
+                                <Input
+                                    placeholder="Name"
+                                    value={contactName}
+                                    onChange={e => setContactName(e.target.value)}
+                                    required
+                                />
+                                <Select value={contactRole} onChange={e => setContactRole(e.target.value)}>
+                                    <option value="Owner">Owner</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Worker">Worker</option>
+                                    <option value="Helper">Helper</option>
+                                    <option value="Sales">Sales</option>
+                                </Select>
+                                <div className="flex gap-2">
+                                    <Input
+                                        placeholder="Phone"
+                                        value={contactPhone}
+                                        onChange={e => setContactPhone(e.target.value)}
+                                    />
+                                    <Button type="submit" size="sm">+</Button>
+                                </div>
+                            </div>
+                        </form>
+                    </Card>
+
+                    {/* PRICE LIST SECTION */}
                     <Card>
                         <h3 className="font-bold text-lg mb-4">Price List</h3>
                         <div className="overflow-x-auto">
@@ -122,7 +201,7 @@ export default function DealerDetailsPage({ params }: { params: Promise<{ id: st
                     </Card>
                 </div>
 
-                {/* RIGHT: Add New Quote Form */}
+                {/* RIGHT COLUMN: Add New Quote Form */}
                 <div>
                     <Card className="sticky top-24">
                         <h3 className="font-bold text-lg mb-4">Add Price Quote</h3>

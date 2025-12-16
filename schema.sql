@@ -91,6 +91,16 @@ create table dealer_prices (
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 
+-- 9. Dealer Contacts
+create table dealer_contacts (
+  id uuid default gen_random_uuid() primary key,
+  dealer_id uuid references dealers(id) on delete cascade not null,
+  name text not null,
+  role text, -- Owner, Worker, Helper, Manager
+  phone text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
 -- Indexes for performance
 create index idx_materials_category on materials(category);
 create index idx_formulas_type on formulas(type);
