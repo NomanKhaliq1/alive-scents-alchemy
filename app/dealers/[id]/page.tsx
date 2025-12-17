@@ -166,7 +166,7 @@ export default function DealerDetailsPage({ params }: { params: Promise<{ id: st
                                         value={contactPhone}
                                         onChange={e => setContactPhone(e.target.value)}
                                     />
-                                    <Button type="submit" size="sm">+</Button>
+                                    <Button type="submit" className="h-[42px] px-4">+</Button>
                                 </div>
                             </div>
                         </form>

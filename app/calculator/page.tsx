@@ -14,12 +14,15 @@ type Formula = {
 }
 
 type FormulaItem = {
-    material: {
+    // Notebook Mode: ingredient_name is source of truth
+    ingredient_name: string
+    // Optional link to inventory
+    material?: {
         id: string
         name: string
         category: string
         material_inventory: { quantity_available: number }[]
-    }
+    } | null
     percentage: number
 }
 
@@ -50,7 +53,7 @@ export default function CalculatorPage() {
         setLoading(true)
         supabase
             .from('formula_items')
-            .select('percentage, material:materials(id, name, category, material_inventory(quantity_available))')
+            .select('ingredient_name, percentage, material:materials(id, name, category, material_inventory(quantity_available))')
             .eq('formula_id', selectedFormulaId)
             .then(({ data, error }) => {
                 if (error) console.error(error)
@@ -145,27 +148,35 @@ export default function CalculatorPage() {
                                         <tbody className="divide-y divide-[var(--border)]">
                                             {items.map((item, idx) => {
                                                 const qty = (item.percentage / 100) * totalAmount
-                                                // Stock is stored in base unit (assuming ml/g matches calculator unit for simplicity in Phase 3)
-                                                // *In a real app, unit conversion logic would be needed here if stock unit != calc unit*
-                                                // For now, assuming 1:1 match or user handles unit consistency.
-                                                const stock = item.material.material_inventory?.[0]?.quantity_available || 0
-                                                const isLow = stock < qty
+
+                                                // Handle Notebook Mode vs Inventory Mode
+                                                // If material is linked, use its stock. Otherwise unknown.
+                                                const stock = item.material?.material_inventory?.[0]?.quantity_available ?? null
+                                                const isLow = stock !== null && stock < qty
+
+                                                // Name logic: Use ingredient_name if available (Notebook), fallback to material name, fallback to 'Unknown'
+                                                const displayName = item.ingredient_name || item.material?.name || 'Unknown Ingredient'
+                                                const category = item.material?.category || 'Notebook'
 
                                                 return (
                                                     <tr key={idx} className={`hover:bg-[var(--muted)]/50 ${isLow ? 'bg-red-50 dark:bg-red-900/10' : ''}`}>
                                                         <td className="p-3 font-medium">
-                                                            {item.material.name}
-                                                            <span className="ml-2 text-xs text-[var(--muted-foreground)] font-normal border border-[var(--border)] px-1.5 py-0.5 rounded-full">{item.material.category}</span>
+                                                            {displayName}
+                                                            <span className="ml-2 text-xs text-[var(--muted-foreground)] font-normal border border-[var(--border)] px-1.5 py-0.5 rounded-full">{category}</span>
                                                         </td>
                                                         <td className="p-3 text-right">{item.percentage}%</td>
                                                         <td className={`p-3 text-right font-bold font-mono text-base ${isLow ? 'text-red-600 dark:text-red-400' : ''}`}>
                                                             {qty.toFixed(2)}
                                                         </td>
                                                         <td className="p-3 text-right text-[var(--muted-foreground)]">
-                                                            {stock}
+                                                            {stock !== null ? stock : '-'}
                                                         </td>
                                                         <td className="p-3 text-center">
-                                                            {isLow ? (
+                                                            {stock === null ? (
+                                                                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300">
+                                                                    Notebook
+                                                                </span>
+                                                            ) : isLow ? (
                                                                 <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
                                                                     Low Stock
                                                                 </span>

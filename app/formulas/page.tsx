@@ -24,11 +24,13 @@ export default async function FormulasPage() {
 
             <div className="grid gap-4 md:grid-cols-3">
                 {formulas?.map((formula: any) => (
-                    <Card key={formula.id} className="hover:shadow-md transition-shadow">
-                        <h2 className="font-semibold text-lg">{formula.name}</h2>
-                        <div className="text-sm text-gray-500 mt-1">{formula.type}</div>
-                        {formula.notes && <p className="text-gray-600 mt-2 text-sm line-clamp-2">{formula.notes}</p>}
-                    </Card>
+                    <Link key={formula.id} href={`/formulas/${formula.id}`}>
+                        <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+                            <h2 className="font-semibold text-lg">{formula.name}</h2>
+                            <div className="text-sm text-gray-500 mt-1">{formula.type}</div>
+                            {formula.notes && <p className="text-gray-600 mt-2 text-sm line-clamp-2">{formula.notes}</p>}
+                        </Card>
+                    </Link>
                 ))}
                 {formulas?.length === 0 && (
                     <p className="text-gray-500 col-span-3 text-center py-12">No formulas found. Create your first one.</p>

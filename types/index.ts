@@ -91,19 +91,25 @@ export interface Database {
                 Row: {
                     id: string
                     formula_id: string
-                    material_id: string
+                    material_id: string | null
+                    ingredient_name: string | null
+                    ingredient_type: string | null // NEW
                     percentage: number
                 }
                 Insert: {
                     id?: string
                     formula_id: string
-                    material_id: string
+                    material_id?: string | null
+                    ingredient_name?: string | null
+                    ingredient_type?: string | null
                     percentage: number
                 }
                 Update: {
                     id?: string
                     formula_id?: string
-                    material_id?: string
+                    material_id?: string | null
+                    ingredient_name?: string | null
+                    ingredient_type?: string | null
                     percentage?: number
                 }
             }
@@ -233,6 +239,32 @@ export interface Database {
                     product_name?: string
                     bottles_available?: number
                     bottle_size_ml?: number
+                    created_at?: string
+                }
+            }
+            formula_steps: {
+                Row: {
+                    id: string
+                    formula_id: string
+                    step_number: number
+                    instruction: string
+                    bonding_days: number
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    formula_id: string
+                    step_number: number
+                    instruction: string
+                    bonding_days?: number
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    formula_id?: string
+                    step_number?: number
+                    instruction?: string
+                    bonding_days?: number
                     created_at?: string
                 }
             }

@@ -247,11 +247,12 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 ## PHASE 13 – Performance Optimization
 
 ### Tasks
-- [x] **Global Loading**: Implement `app/loading.tsx` for visual feedback
-- [x] **Background Optimization**: Reduce blur radius and opacity in `layout.tsx`
-- [ ] **Route Specific Loading**: Add granular loading states if needed
+- [x] **Schema**: Update `schema.sql` (Add `ingredient_name`, make `material_id` nullable)
+- [x] **Types**: Update `types/index.ts`
+- [x] **UI Refactor**: Update `app/formulas/create` for text-based input
+- [ ] **Batch Logic**: Implement soft-matching (Name vs Inventory) for stock deduction
 
-**Status:** Completed
+**Status:** In Progress
 
 ---
 
@@ -279,3 +280,26 @@ Internal lab system for managing perfume formulas, batches, bonding, and invento
 Version: v1.2  
 Based on: infov1.md, infov2.md, folders-structured.md, ANTIGRAVITY.md  
 Next File: schema.sql
+
+---
+
+## PHASE 22 – UI Layout Optimization
+
+### Tasks
+- [x] **Formula Edit Page**: Switch to 2-column layout (Details Left, Ingredients Right).
+- [x] **Formula Create Page**: Switch to 2-column layout.
+- [x] **Container**: Widen to `max-w-[1600px]` for better screen usage.
+
+**Status:** Completed
+
+---
+
+## PHASE 23 – UI Polish (Combobox)
+
+### Tasks
+- [x] **Combobox Component**: Create `components/ui/Combobox.tsx` (Select + Create).
+- [x] **Integration**: Replace native `datalist` in Formula pages.
+- [x] **Styling**: Match "Glass" theme (Blur, Dark Scrollbar, Colors).
+- [x] **Build Fixes**: Resolve TypeScript errors in Button usage.
+
+**Status:** Completed
